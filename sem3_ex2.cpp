@@ -1,9 +1,9 @@
 #include <iostream>
-void good_incrementor(int *x){
-    (*x)++;
+void good_incrementor(int *a){
+    (*a)++;
 }
 int main(){
-    int x = 5;
+    int x = 0;
     std::cout << "x old: " << x << std::endl;
     good_incrementor(&x);
     std::cout << "x changed: " << x << std::endl;
