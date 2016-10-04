@@ -2,8 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
-
-#define MULTIPL 3
+#define MULTIPLIER 15       // 56, (3; 2)
 
 
 struct Node {                               //Создание типа данных Node(звено).
@@ -74,26 +73,25 @@ void add_node(DynList *list, int i, double x, double y) {
 
 void init_list(DynList *list, int list_len) {
     for (int i = 0; i < list_len; i++) {
-        add_node(list, i, rand() % MULTIPL, rand() % MULTIPL);
+        add_node(list, i, rand() % MULTIPLIER, rand() % MULTIPLIER);
     }
 }
 
 
-void print_list(DynList *list) {
-    int i = 0;
+void print_list(DynList *list, int list_len) {
+    int k = 5;
     Node *temp = list->head;
-    std::cout << "\n";
-    while (temp != nullptr) {
-        i++;
-        std::cout << std::setw(5) << temp->i << ": (" << temp->x << "; " << temp->y << ") ";
-        temp = temp->next;
-        if (i == 5){
-            i = 0;
-            std::cout << "\n";
+    for (int i = 1; i <= list_len; i++) {
+        if (k == 5) {
+            std::cout << "\n*";
+            k = 0;
         }
-
+        k++;
+        std::cout << std::setw(5) << i << ": ("
+                  << std::setw(2) << temp->x << "; " << std::setw(2) << temp->y << ") ";
+        temp = temp->next;
     }
-    std::cout << "\n";
+    std::cout << "\n\n";
 }
 
 
@@ -117,23 +115,19 @@ int main() {
     DynList *MyList = create_list();
     int list_len;
     double x, y;
-    std::cout << "Enter the length of the list:\n ";
+    std::cout << "Enter the length of the list:\n";
     std::cin >> list_len;
     std::cout << "Enter the search point:\n";
     std::cin >> x >> y;
-
-
-
-
     init_list(MyList, list_len);
-    print_list(MyList);
+    print_list(MyList, list_len);
 
 
     try {
         std::cout << "First match " << first_match(MyList, x, y)
-                  << ", last match " << last_match(MyList, x, y, list_len)<< ".\n";
+                  << ", last match " << last_match(MyList, x, y, list_len) << ".\n";
     }
-    catch (char *str) {
+    catch (char const *str) {
         std::cout << str;
     }
 
