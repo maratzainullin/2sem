@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
-#define MULTIPLIER 15       // 56, (3; 2)
+#define MULTIPLIER 11       // 56, (3; 2)
 
 
 struct Node {                               //Создание типа данных Node(звено).
@@ -15,14 +15,29 @@ struct Node {                               //Создание типа данн
 struct DynList {                            //Создание типа данных DynList(список).
     Node *head;                             //Указатели на адреса начала и конца списка.
     Node *tail;
+    int len;
 };
 
 
-DynList *create_list() {                 //Создание пустого списка.
+DynList *create_list() {
+    int len;                                //Создание пустого списка.
     DynList *list = new DynList;            //Выделение памяти под переменную типа DynList.
-    //std::cout << "Memory add " << list << "\n";
     list->head = list->tail = nullptr;         //Голова и хвост ничто(их указатели указывают на NULL), но они существуют.
+    std::cout << "Enter the length of the list:\n";
+    std::cin >> len;
+    list->len = len;
     return list;
+}
+
+
+Node *select_to(DynList *list, int position){
+    Node *temp = list->head;
+    int i = 1;
+    while (i < position){
+        temp = temp->next;
+        i++;
+    }
+    return temp;
 }
 
 
@@ -39,9 +54,9 @@ int first_match(DynList *list, double x, double y) {
 }
 
 
-int last_match(DynList *list, double x, double y, int list_len) {
+int last_match(DynList *list, double x, double y) {
     Node *temp = list->tail;
-    int i = list_len;
+    int i = list->len;
     while ((temp->x != x) or (temp->y != y)) {
         temp = temp->prev;
         i--;
@@ -52,14 +67,13 @@ int last_match(DynList *list, double x, double y, int list_len) {
 }
 
 
-void add_node(DynList *list, int i, double x, double y) {
-    Node *temp;
-    temp = new Node();
+void add_back(DynList *list, int i, double x, double y) {
+    Node *temp = new Node();
+    std::cout << "Memory set " << temp << "\n";
     temp->next = nullptr;
     temp->i = i + 1;
     temp->x = x;
     temp->y = y;
-    //std::cout << "Memory add " << temp << "\n";
     if (list->head) {                                   // Если список не пуст
         temp->prev = list->tail;                        // Указываем адрес на предыдущий элемент в соотв. поле
         list->tail->next = temp;                        // Указываем адрес следующего за хвостом элемента
@@ -71,17 +85,55 @@ void add_node(DynList *list, int i, double x, double y) {
 }
 
 
-void init_list(DynList *list, int list_len) {
-    for (int i = 0; i < list_len; i++) {
-        add_node(list, i, rand() % MULTIPLIER, rand() % MULTIPLIER);
+void init_rand_list(DynList *list) {
+    for (int i = 0; i < list->len; i++) {
+        add_back(list, i, rand() % MULTIPLIER, rand() % MULTIPLIER);
     }
 }
 
 
-void print_list(DynList *list, int list_len) {
+void add_to(DynList *list, int position, double x, double y){
+    //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
+    Node *insert_node = new Node;
+    Node *select_node = select_to(list, position);
+    insert_node->x = x;
+    insert_node->y = y;
+    insert_node->prev = select_node->prev;
+    insert_node->next = select_node;
+    if (select_node->prev){
+        select_node->prev->next = insert_node;
+    }
+    select_node->prev = insert_node;
+    if (!insert_node->prev){
+        list->head = insert_node;
+    }
+    list->len++;
+}
+
+
+void remove_from(DynList *list, int position){
+    Node *select_node = select_to(list, position);                  //Если удаляем не крайний элемент.
+    if (select_node->prev) {
+        select_node->prev->next = select_node->next;
+    }
+    if (select_node->next) {
+        select_node->next->prev = select_node->prev;
+    }
+    if (!select_node->prev){
+        list->head = select_node->next;                             //Если удаляем крайний элемент.
+    }
+    if (!select_node->next){
+        list->tail = select_node->prev;
+    }
+    delete select_node;
+    list->len--;
+}
+
+
+void print_list(DynList *list) {
     int k = 5;
     Node *temp = list->head;
-    for (int i = 1; i <= list_len; i++) {
+    for (int i = 1; i <= list->len; i++) {
         if (k == 5) {
             std::cout << "\n*";
             k = 0;
@@ -101,7 +153,7 @@ void delete_list(DynList *list) {
     Node *prev;
     while (temp) {
         prev = temp->prev;
-        //std::clog << "Memory free " << temp << "\n";
+        std::cout << "Memory free " << temp << "\n";
         delete temp;
         temp = prev;
     }
@@ -113,24 +165,28 @@ void delete_list(DynList *list) {
 
 int main() {
     DynList *MyList = create_list();
-    int list_len;
+    init_rand_list(MyList);
+    print_list(MyList);
+    system("pause");
+
+    add_to(MyList, 10, 99, 99);
+    print_list(MyList);
+    system("pause");
+
+    remove_from(MyList, 11);
+    print_list(MyList);
+    system("pause");
+
     double x, y;
-    std::cout << "Enter the length of the list:\n";
-    std::cin >> list_len;
     std::cout << "Enter the search point:\n";
     std::cin >> x >> y;
-    init_list(MyList, list_len);
-    print_list(MyList, list_len);
-
-
     try {
         std::cout << "First match " << first_match(MyList, x, y)
-                  << ", last match " << last_match(MyList, x, y, list_len) << ".\n";
+                  << ", last match " << last_match(MyList, x, y) << ".\n";
     }
     catch (char const *str) {
         std::cout << str;
     }
-
 
     delete_list(MyList);
     return 0;
