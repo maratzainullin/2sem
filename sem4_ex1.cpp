@@ -2,7 +2,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
+
 #define MULTIPLIER 11       // 56, (3; 2)
+#define OUT_LEN 5
 
 
 struct Node {                               //Создание типа данных Node(звено).
@@ -20,7 +22,7 @@ struct DynList {                            //Создание типа данн
 
 
 DynList *create_list() {
-    int len;                                //Создание пустого списка.
+    int len;                                //Создание пустого списка(фактическая длина - 0).
     DynList *list = new DynList;            //Выделение памяти под переменную типа DynList.
     list->head = list->tail = nullptr;         //Голова и хвост ничто(их указатели указывают на NULL), но они существуют.
     std::cout << "Enter the length of the list:\n";
@@ -30,10 +32,10 @@ DynList *create_list() {
 }
 
 
-Node *select_to(DynList *list, int position){
+Node *select_to(DynList *list, int position) {
     Node *temp = list->head;
     int i = 1;
-    while (i < position){
+    while (i < position) {
         temp = temp->next;
         i++;
     }
@@ -41,7 +43,7 @@ Node *select_to(DynList *list, int position){
 }
 
 
-int first_match(DynList *list, double x, double y) {
+int first_match(DynList *list, double y, double x) {
     Node *temp = list->head;
     int i = 1;
     while (temp->x != x or temp->y != y) {
@@ -54,7 +56,7 @@ int first_match(DynList *list, double x, double y) {
 }
 
 
-int last_match(DynList *list, double x, double y) {
+int last_match(DynList *list, double y, double x) {
     Node *temp = list->tail;
     int i = list->len;
     while ((temp->x != x) or (temp->y != y)) {
@@ -69,7 +71,7 @@ int last_match(DynList *list, double x, double y) {
 
 void add_back(DynList *list, int i, double x, double y) {
     Node *temp = new Node();
-    std::cout << "Memory set " << temp << "\n";
+    /*std::cout << "Memory set " << temp << "\n";*/
     temp->next = nullptr;
     temp->i = i + 1;
     temp->x = x;
@@ -92,7 +94,7 @@ void init_rand_list(DynList *list) {
 }
 
 
-void add_to(DynList *list, int position, double x, double y){
+void add_to(DynList *list, double y, double x, int position) {
     //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
     Node *insert_node = new Node;
     Node *select_node = select_to(list, position);
@@ -100,18 +102,18 @@ void add_to(DynList *list, int position, double x, double y){
     insert_node->y = y;
     insert_node->prev = select_node->prev;
     insert_node->next = select_node;
-    if (select_node->prev){
+    if (select_node->prev) {
         select_node->prev->next = insert_node;
     }
     select_node->prev = insert_node;
-    if (!insert_node->prev){
+    if (!insert_node->prev) {
         list->head = insert_node;
     }
     list->len++;
 }
 
 
-void remove_from(DynList *list, int position){
+void remove_from(DynList *list, int position) {
     Node *select_node = select_to(list, position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
@@ -119,10 +121,10 @@ void remove_from(DynList *list, int position){
     if (select_node->next) {
         select_node->next->prev = select_node->prev;
     }
-    if (!select_node->prev){
+    if (!select_node->prev) {
         list->head = select_node->next;                             //Если удаляем крайний элемент.
     }
-    if (!select_node->next){
+    if (!select_node->next) {
         list->tail = select_node->prev;
     }
     delete select_node;
@@ -131,19 +133,19 @@ void remove_from(DynList *list, int position){
 
 
 void print_list(DynList *list) {
-    int k = 5;
+    int k = OUT_LEN;
     Node *temp = list->head;
     for (int i = 1; i <= list->len; i++) {
-        if (k == 5) {
+        if (k == OUT_LEN) {
             std::cout << "\n*";
             k = 0;
         }
         k++;
-        std::cout << std::setw(5) << i << ": ("
+        std::cout << std::setw(3) << i << ": ("
                   << std::setw(2) << temp->x << "; " << std::setw(2) << temp->y << ") ";
         temp = temp->next;
     }
-    std::cout << "\n\n";
+    std::cout << "\n";
 }
 
 
@@ -163,31 +165,84 @@ void delete_list(DynList *list) {
 }
 
 
+int enter_pos() {
+    int pos;
+    std::cout << "Enter position:\n";
+    std::cin >> pos;
+    return pos;
+}
+
+
+double enter_data(bool f) {
+    double x;
+    if (f) {
+        std::cout << "Enter data:\n";
+    }
+    std::cin >> x;
+    return x;
+}
+
+
 int main() {
-    DynList *MyList = create_list();
-    init_rand_list(MyList);
-    print_list(MyList);
-    system("pause");
-
-    add_to(MyList, 10, 99, 99);
-    print_list(MyList);
-    system("pause");
-
-    remove_from(MyList, 11);
-    print_list(MyList);
-    system("pause");
-
-    double x, y;
-    std::cout << "Enter the search point:\n";
-    std::cin >> x >> y;
-    try {
-        std::cout << "First match " << first_match(MyList, x, y)
+    DynList *MyList = nullptr;
+    std::cout << "Select an option:\n"
+            "1: Create a random list.\n"
+            "2: Print a list.\n"
+            "3: Add an element to this position and print list.\n"
+            "4: Remove an element from this position and print list.\n"
+            "5: Find an element(first and last match).\n"
+            "0: Exit.\n";
+    while (1) {
+        int i;
+        std::cin >> i;
+        if (!i) {
+            break;
+        }
+        switch (i) {
+            case 1: {
+                std::cout << "*******Create a random list.*******\n";
+                MyList = create_list();
+                init_rand_list(MyList);
+                break;
+            }
+            case 2: {
+                std::cout << "*******Print a list.*******\n";
+                print_list(MyList);
+                break;
+            };
+            case 3: {
+                std::cout << "*******Adding an element.*******\n";
+                add_to(MyList, enter_data(0), enter_data(1), enter_pos());
+                print_list(MyList);
+                break;
+            }
+            case 4: {
+                std::cout << "*******Removing an element.*******\n";
+                remove_from(MyList, enter_pos());
+                print_list(MyList);
+                break;
+            }
+            case 5: {
+                double x = enter_data(1);
+                double y = enter_data(0);
+                std::cout << "*******Finding an element(first and last match).*******\n";
+                std::cout << "First match: " << first_match(MyList, y, x)
+                          << ", last match: " << last_match(MyList, y, x)
+                          << ".\n";
+                break;
+            }
+            default: {
+                std::cout << "???Invalid option???";
+            }
+        }
+    }
+    /*try {
+        std::cout << "First match " << first_match(MyList, enter_data(0),  enter_data(1))
                   << ", last match " << last_match(MyList, x, y) << ".\n";
     }
     catch (char const *str) {
         std::cout << str;
-    }
-
+    }*/
     delete_list(MyList);
     return 0;
 }
