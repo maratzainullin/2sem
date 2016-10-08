@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <iomanip>
 
-#define MULTIPLIER 11       // 56, (3; 2)
+#define MULTIPLIER 100
 #define OUT_LEN 5
 
 
@@ -50,7 +50,7 @@ int first_match(DynList *list, double y, double x) {
         temp = temp->next;
         i++;
         if (temp == nullptr)
-            throw "Node not found.";
+            throw "Node not found. Try againSSS. ";
     };
     return i;
 }
@@ -63,7 +63,7 @@ int last_match(DynList *list, double y, double x) {
         temp = temp->prev;
         i--;
         if (temp == nullptr)
-            throw "Node not found.";
+            throw "Element not found. Select option.\n";
     };
     return i;
 }
@@ -71,7 +71,6 @@ int last_match(DynList *list, double y, double x) {
 
 void add_back(DynList *list, int i, double x, double y) {
     Node *temp = new Node();
-    /*std::cout << "Memory set " << temp << "\n";*/
     temp->next = nullptr;
     temp->i = i + 1;
     temp->x = x;
@@ -133,6 +132,9 @@ void remove_from(DynList *list, int position) {
 
 
 void print_list(DynList *list) {
+    if (list == nullptr) {
+        throw "\nList is not created! Create it.\n";
+    }
     int k = OUT_LEN;
     Node *temp = list->head;
     for (int i = 1; i <= list->len; i++) {
@@ -155,20 +157,23 @@ void delete_list(DynList *list) {
     Node *prev;
     while (temp) {
         prev = temp->prev;
-        std::cout << "Memory free " << temp << "\n";
         delete temp;
         temp = prev;
     }
-
-    //std::cout << "Memory free " << list << "\n";
     delete list;
 }
 
 
-int enter_pos() {
-    int pos;
+int enter_pos(DynList *list) {
+    if (list == nullptr) {
+        throw "List is not created! Create it.\n";
+    }
+    int pos = 0;
     std::cout << "Enter position:\n";
     std::cin >> pos;
+    if (pos > list->len or pos <= 0) {
+        throw "Position not found. Select option.\n";
+    }
     return pos;
 }
 
@@ -198,51 +203,60 @@ int main() {
         if (!i) {
             break;
         }
-        switch (i) {
-            case 1: {
-                std::cout << "*******Create a random list.*******\n";
-                MyList = create_list();
-                init_rand_list(MyList);
-                break;
-            }
-            case 2: {
-                std::cout << "*******Print a list.*******\n";
-                print_list(MyList);
-                break;
-            };
-            case 3: {
-                std::cout << "*******Adding an element.*******\n";
-                add_to(MyList, enter_data(0), enter_data(1), enter_pos());
-                print_list(MyList);
-                break;
-            }
-            case 4: {
-                std::cout << "*******Removing an element.*******\n";
-                remove_from(MyList, enter_pos());
-                print_list(MyList);
-                break;
-            }
-            case 5: {
-                double x = enter_data(1);
-                double y = enter_data(0);
-                std::cout << "*******Finding an element(first and last match).*******\n";
-                std::cout << "First match: " << first_match(MyList, y, x)
-                          << ", last match: " << last_match(MyList, y, x)
-                          << ".\n";
-                break;
-            }
-            default: {
-                std::cout << "???Invalid option???";
+        try {
+            switch (i) {
+                case 1: {
+                    std::cout << "*******Create a random list.*******\n";
+                    MyList = create_list();
+                    init_rand_list(MyList);
+                    break;
+                }
+                case 2: {
+                    std::cout << "*******Print a list.*******";
+                    print_list(MyList);
+                    break;
+                };
+                case 3: {
+                    std::cout << "*******Adding an element.*******\n";
+                    int pos = enter_pos(MyList);
+                    add_to(MyList, enter_data(0), enter_data(1), pos);        //enter_data(0) = y
+                    print_list(MyList);
+                    break;
+                }
+                case 4: {
+                    std::cout << "*******Removing an element.*******\n";
+                    int pos = enter_pos(MyList);
+                    remove_from(MyList, pos);
+                    print_list(MyList);
+                    break;
+                }
+                case 5: {
+                    std::cout << "*******Finding an element(first and last match).*******\n";
+                    if (MyList == nullptr) {
+                        throw "List is not created! Create it.\n";
+                    }
+                    double x = enter_data(1);
+                    double y = enter_data(0);
+                    std::cout << "First match: " << first_match(MyList, y, x)
+                              << ", last match: " << last_match(MyList, y, x)
+                              << ".\n";
+
+                    break;
+                }
+                default: {
+                    std::cout << "*******Invalid option! Try again.*******\n";
+                    continue;
+                }
             }
         }
+        catch (char const *str) {
+            std::cout << str;
+            continue;
+        }
+        std::cout << "Done! Select an option.\n";
     }
-    /*try {
-        std::cout << "First match " << first_match(MyList, enter_data(0),  enter_data(1))
-                  << ", last match " << last_match(MyList, x, y) << ".\n";
+    if (MyList){
+        delete_list(MyList);
     }
-    catch (char const *str) {
-        std::cout << str;
-    }*/
-    delete_list(MyList);
     return 0;
 }
