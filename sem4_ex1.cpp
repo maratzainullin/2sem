@@ -1,38 +1,41 @@
 #include <cstdlib>
+#include <cmath>
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
+#include <math.h>
 
 #define MULTIPLIER 100
 #define OUT_LEN 5
 
 
-struct Node {                               //Создание типа данных Node(звено).
+struct Node {
     int i;
-    double x, y;
+    double x, y, r;
     Node *next, *prev;
 };
 
 
-struct DynList {                            //Создание типа данных DynList(список).
-    Node *head;                             //Указатели на адреса начала и конца списка.
+struct DynList {
+    Node *centre;
+    Node *head;
     Node *tail;
     int len;
 };
 
 
 DynList *create_list() {
-    int len;                                //Создание пустого списка(фактическая длина - 0).
-    DynList *list = new DynList;            //Выделение памяти под переменную типа DynList.
-    list->head = list->tail = nullptr;         //Голова и хвост ничто(их указатели указывают на NULL), но они существуют.
-    std::cout << "Enter the length of the list:\n";
-    std::cin >> len;
-    list->len = len;
+    //Создание пустого списка.
+    DynList *list = new DynList;
+    list->len = 0;
+    list->head = list->tail = nullptr;
+    list->centre = new Node();
+    list->centre->x = list->centre->y = 0;
     return list;
 }
 
 
-Node *select_to(DynList *list, int position) {
+Node *get_to(DynList *list, int position) {
     Node *temp = list->head;
     int i = 1;
     while (i < position) {
@@ -69,12 +72,12 @@ int last_match(DynList *list, double y, double x) {
 }
 
 
-void add_back(DynList *list, int i, double x, double y) {
+void add_back(DynList *list, double x, double y, double r = 0) {
     Node *temp = new Node();
     temp->next = nullptr;
-    temp->i = i + 1;
     temp->x = x;
     temp->y = y;
+    temp->r = r;
     if (list->head) {                                   // Если список не пуст
         temp->prev = list->tail;                        // Указываем адрес на предыдущий элемент в соотв. поле
         list->tail->next = temp;                        // Указываем адрес следующего за хвостом элемента
@@ -87,8 +90,10 @@ void add_back(DynList *list, int i, double x, double y) {
 
 
 void init_rand_list(DynList *list) {
+    std::cout << "Enter the length of the list:\n";
+    std::cin >> list->len;
     for (int i = 0; i < list->len; i++) {
-        add_back(list, i, rand() % MULTIPLIER, rand() % MULTIPLIER);
+        add_back(list, rand() % MULTIPLIER, rand() % MULTIPLIER);
     }
 }
 
@@ -96,7 +101,7 @@ void init_rand_list(DynList *list) {
 void add_to(DynList *list, double y, double x, int position) {
     //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
     Node *insert_node = new Node;
-    Node *select_node = select_to(list, position);
+    Node *select_node = get_to(list, position);
     insert_node->x = x;
     insert_node->y = y;
     insert_node->prev = select_node->prev;
@@ -113,7 +118,7 @@ void add_to(DynList *list, double y, double x, int position) {
 
 
 void remove_from(DynList *list, int position) {
-    Node *select_node = select_to(list, position);                  //Если удаляем не крайний элемент.
+    Node *select_node = get_to(list, position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
     }
@@ -132,8 +137,8 @@ void remove_from(DynList *list, int position) {
 
 
 void print_list(DynList *list) {
-    if (list == nullptr) {
-        throw "\nList is not created! Create it.\n";
+    if (list == nullptr or list->len == 0) {
+        throw "\nList is not created! Select option.\n";
     }
     int k = OUT_LEN;
     Node *temp = list->head;
@@ -142,10 +147,12 @@ void print_list(DynList *list) {
             std::cout << "\n*";
             k = 0;
         }
-        k++;
-        std::cout << std::setw(3) << i << ": ("
-                  << std::setw(2) << temp->x << "; " << std::setw(2) << temp->y << ") ";
+        std::cout << std::setw(6) << std::fixed << std::setprecision(0) << i << ": ("
+                  << std::setw(2) << temp->x << "; "
+                  << std::setw(2) << temp->y << ")"
+                  << std::setw(7) << std::fixed << std::setprecision(2) << temp->r;
         temp = temp->next;
+        k++;
     }
     std::cout << "\n";
 }
@@ -188,9 +195,96 @@ double enter_data(bool f) {
 }
 
 
+Node *pattern1(Node *sel_node) {
+    if (sel_node->x > 5 and sel_node->y > 5) {
+        return sel_node;
+    }
+    return nullptr;
+}
+
+
+Node *get_centre(DynList *list) {
+
+    Node *temp = list->head;
+    while (temp) {
+        list->centre->x += temp->x;
+        list->centre->y += temp->y;
+        temp = temp->next;
+    }
+    list->centre->x /= list->len;
+    list->centre->y /= list->len;
+    return list->centre;
+}
+
+
+Node *distance_to_centre(DynList *list, Node *sel_node) {
+    sel_node->r = sqrt(pow(sel_node->x - list->centre->x, 2) + pow(sel_node->y - list->centre->y, 2));
+    return sel_node;
+}
+
+
+Node *min_node(DynList *list, Node *sel_node) {
+    Node *temp;
+    temp = sel_node->next;
+    while (temp) {
+        if (sel_node->r > temp->r) {
+            sel_node = temp;
+        }
+        temp = temp->next;
+    }
+    return sel_node;
+}
+
+
+
+/*DynList *use_pattern_and_save(DynList *list, Node *(*pattern_ptr)(DynList *, Node *)) {
+    Node *temp = list->head;
+    while (temp) {
+        if (pattern_ptr(list, temp)) {
+            add_back(list, pattern_ptr(list, temp)->x, pattern_ptr(list, temp)->y,
+                     pattern_ptr(list, temp)->r);
+            list->len++;
+        }
+        temp = temp->next;
+    }
+    return list;~
+}*/
+
+
+DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, Node *), int p) {
+    DynList *ListWithPattern = create_list();
+    Node *temp = list->head;
+    for (int i = 0; i < p; i++) {
+        if (pattern_ptr(list, temp)) {
+            add_back(ListWithPattern, pattern_ptr(list, temp)->x, pattern_ptr(list, temp)->y,
+                     pattern_ptr(list, temp)->r);
+            ListWithPattern->len++;
+        }
+        temp = temp->next;
+    }
+    return ListWithPattern;
+}
+
+
 int main() {
     DynList *MyList = nullptr;
-    std::cout << "Select an option:\n"
+    std::cout << "*******Create a random list.*******\n";
+    MyList = create_list();
+    init_rand_list(MyList);
+    print_list(MyList);
+    get_centre(MyList);
+    std::cout << MyList->centre->x << " "
+              << MyList->centre->y << "\n";
+
+
+    DynList *MyListWithDist = nullptr;
+    MyListWithDist = use_pattern_and_create(MyList, distance_to_centre, MyList->len);
+    print_list(MyListWithDist);
+    DynList *MyListWithDistSort = nullptr;
+    MyListWithDistSort = use_pattern_and_create(MyListWithDist, min_node, 2);
+    print_list(MyListWithDistSort);
+
+    /*std::cout << "Select an option:\n"
             "1: Create a random list.\n"
             "2: Print a list.\n"
             "3: Add an element to this position and print list.\n"
@@ -255,8 +349,8 @@ int main() {
         }
         std::cout << "Done! Select an option.\n";
     }
-    if (MyList){
+    if (MyList) {
         delete_list(MyList);
-    }
+    }*/
     return 0;
 }
