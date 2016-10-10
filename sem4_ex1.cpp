@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <math.h>
 
-#define MULTIPLIER 100
+#define MULTIPLIER 10
 #define OUT_LEN 5
 
 
@@ -72,12 +72,13 @@ int last_match(DynList *list, double y, double x) {
 }
 
 
-void add_back(DynList *list, double x, double y, double r = 0) {
+void add_back(DynList *list, double x, double y, int i, double r = 0) {
     Node *temp = new Node();
     temp->next = nullptr;
     temp->x = x;
     temp->y = y;
     temp->r = r;
+    temp->i = i;
     if (list->head) {                                   // Если список не пуст
         temp->prev = list->tail;                        // Указываем адрес на предыдущий элемент в соотв. поле
         list->tail->next = temp;                        // Указываем адрес следующего за хвостом элемента
@@ -93,7 +94,7 @@ void init_rand_list(DynList *list) {
     std::cout << "Enter the length of the list:\n";
     std::cin >> list->len;
     for (int i = 0; i < list->len; i++) {
-        add_back(list, rand() % MULTIPLIER, rand() % MULTIPLIER);
+        add_back(list, rand() % MULTIPLIER, rand() % MULTIPLIER, i);
     }
 }
 
@@ -117,7 +118,7 @@ void add_to(DynList *list, double y, double x, int position) {
 }
 
 
-void remove_from(DynList *list, int position) {
+Node *remove_from(DynList *list, int position) {
     Node *select_node = get_to(list, position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
@@ -131,8 +132,27 @@ void remove_from(DynList *list, int position) {
     if (!select_node->next) {
         list->tail = select_node->prev;
     }
-    delete select_node;
+    //delete select_node;
     list->len--;
+    return select_node;
+}
+
+
+Node *remove_from(DynList *list, Node *select_node) {
+    if (select_node->prev) {
+        select_node->prev->next = select_node->next;
+    }
+    if (select_node->next) {
+        select_node->next->prev = select_node->prev;
+    }
+    if (!select_node->prev) {
+        list->head = select_node->next;                             //Если удаляем крайний элемент.
+    }
+    if (!select_node->next) {
+        list->tail = select_node->prev;
+    }
+    list->len--;
+    return select_node;
 }
 
 
@@ -147,10 +167,11 @@ void print_list(DynList *list) {
             std::cout << "\n*";
             k = 0;
         }
-        std::cout << std::setw(6) << std::fixed << std::setprecision(0) << i << ": ("
+        std::cout << std::setw(7) << std::fixed << std::setprecision(0) << i << ": ("
                   << std::setw(2) << temp->x << "; "
-                  << std::setw(2) << temp->y << ")"
-                  << std::setw(7) << std::fixed << std::setprecision(2) << temp->r;
+                  << std::setw(2) << temp->y << ") "
+                  //<< std::setw(2) << temp->i << ")"
+                  << std::setw(5) << std::fixed << std::setprecision(2) << temp->r;
         temp = temp->next;
         k++;
     }
@@ -195,9 +216,9 @@ double enter_data(bool f) {
 }
 
 
-Node *pattern1(Node *sel_node) {
-    if (sel_node->x > 5 and sel_node->y > 5) {
-        return sel_node;
+Node *pattern1(Node *select_node) {
+    if (select_node->x > 5 and select_node->y > 5) {
+        return select_node;
     }
     return nullptr;
 }
@@ -217,47 +238,37 @@ Node *get_centre(DynList *list) {
 }
 
 
-Node *distance_to_centre(DynList *list, Node *sel_node) {
-    sel_node->r = sqrt(pow(sel_node->x - list->centre->x, 2) + pow(sel_node->y - list->centre->y, 2));
-    return sel_node;
+Node *distance_to_centre(DynList *list, Node *select_node) {
+    select_node->r = sqrt(pow(select_node->x - list->centre->x, 2)
+                          + pow(select_node->y - list->centre->y, 2));
+    return select_node;
 }
 
 
-Node *min_node(DynList *list, Node *sel_node) {
-    Node *temp;
-    temp = sel_node->next;
+Node *min_node(DynList *list, Node *select_node) {
+    Node *temp, *min_node;
+    min_node = list->head;
+    temp = min_node->next;
     while (temp) {
-        if (sel_node->r > temp->r) {
-            sel_node = temp;
+        if (min_node->r > temp->r) {
+            min_node = temp;
         }
         temp = temp->next;
     }
-    return sel_node;
+    min_node = remove_from(list, min_node);
+    return min_node;
 }
-
-
-
-/*DynList *use_pattern_and_save(DynList *list, Node *(*pattern_ptr)(DynList *, Node *)) {
-    Node *temp = list->head;
-    while (temp) {
-        if (pattern_ptr(list, temp)) {
-            add_back(list, pattern_ptr(list, temp)->x, pattern_ptr(list, temp)->y,
-                     pattern_ptr(list, temp)->r);
-            list->len++;
-        }
-        temp = temp->next;
-    }
-    return list;~
-}*/
 
 
 DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, Node *), int p) {
     DynList *ListWithPattern = create_list();
     Node *temp = list->head;
+    Node *patterned_node;
     for (int i = 0; i < p; i++) {
-        if (pattern_ptr(list, temp)) {
-            add_back(ListWithPattern, pattern_ptr(list, temp)->x, pattern_ptr(list, temp)->y,
-                     pattern_ptr(list, temp)->r);
+        patterned_node = pattern_ptr(list, temp);
+        if (patterned_node) {
+            add_back(ListWithPattern, patterned_node->x, patterned_node->y, patterned_node->i,
+                     patterned_node->r);
             ListWithPattern->len++;
         }
         temp = temp->next;
@@ -271,7 +282,7 @@ int main() {
     std::cout << "*******Create a random list.*******\n";
     MyList = create_list();
     init_rand_list(MyList);
-    print_list(MyList);
+    //print_list(MyList);
     get_centre(MyList);
     std::cout << MyList->centre->x << " "
               << MyList->centre->y << "\n";
@@ -280,9 +291,22 @@ int main() {
     DynList *MyListWithDist = nullptr;
     MyListWithDist = use_pattern_and_create(MyList, distance_to_centre, MyList->len);
     print_list(MyListWithDist);
+
+
     DynList *MyListWithDistSort = nullptr;
-    MyListWithDistSort = use_pattern_and_create(MyListWithDist, min_node, 2);
+    MyListWithDistSort = use_pattern_and_create(MyListWithDist, min_node, 15);
     print_list(MyListWithDistSort);
+
+
+    print_list(MyListWithDist);
+
+    /*try {
+        print_list(MyListWithDist);
+    }
+    catch (char const *str){
+        std::cout << str;
+    }*/
+
 
     /*std::cout << "Select an option:\n"
             "1: Create a random list.\n"
