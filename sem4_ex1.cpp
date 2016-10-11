@@ -46,6 +46,30 @@ Node *get_to(DynList *list, int position) {
 }
 
 
+double enter_data(bool f) {
+    double x;
+    if (f) {
+        std::cout << "Enter data:\n";
+    }
+    std::cin >> x;
+    return x;
+}
+
+
+int enter_pos(DynList *list) {
+    if (list == nullptr) {
+        throw "List is not created! Create it.\n";
+    }
+    int pos = 0;
+    std::cout << "Enter position:\n";
+    std::cin >> pos;
+    if (pos > list->len or pos <= 0) {
+        throw "Position not found. Select option.\n";
+    }
+    return pos;
+}
+
+
 int first_match(DynList *list, double y, double x) {
     Node *temp = list->head;
     int i = 1;
@@ -118,6 +142,42 @@ void add_to(DynList *list, double y, double x, int position) {
 }
 
 
+void print_list(DynList *list) {
+    if (list == nullptr or list->len == 0) {
+        throw "\nList is not created! Select option.\n";
+    }
+    int k = OUT_LEN;
+    Node *temp = list->head;
+    for (int i = 1; i <= list->len; i++) {
+        if (k == OUT_LEN) {
+            std::cout << "\n*";
+            k = 0;
+        }
+        std::cout << std::setw(7) << std::fixed << std::setprecision(0) << i << ": ("
+                  << std::setw(2) << temp->x << "; "
+                  << std::setw(2) << temp->y << ") "
+                  //<< std::setw(2) << temp->i << ")"
+                  << std::setw(5) << std::fixed << std::setprecision(2) << temp->r;
+        temp = temp->next;
+        k++;
+    }
+    std::cout << "\n";
+}
+
+
+void delete_list(DynList *list) {
+    Node *temp;
+    temp = list->tail;
+    Node *prev;
+    while (temp) {
+        prev = temp->prev;
+        delete temp;
+        temp = prev;
+    }
+    delete list;
+}
+
+
 Node *remove_from(DynList *list, int position) {
     Node *select_node = get_to(list, position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
@@ -156,67 +216,7 @@ Node *remove_from(DynList *list, Node *select_node) {
 }
 
 
-void print_list(DynList *list) {
-    if (list == nullptr or list->len == 0) {
-        throw "\nList is not created! Select option.\n";
-    }
-    int k = OUT_LEN;
-    Node *temp = list->head;
-    for (int i = 1; i <= list->len; i++) {
-        if (k == OUT_LEN) {
-            std::cout << "\n*";
-            k = 0;
-        }
-        std::cout << std::setw(7) << std::fixed << std::setprecision(0) << i << ": ("
-                  << std::setw(2) << temp->x << "; "
-                  << std::setw(2) << temp->y << ") "
-                  //<< std::setw(2) << temp->i << ")"
-                  << std::setw(5) << std::fixed << std::setprecision(2) << temp->r;
-        temp = temp->next;
-        k++;
-    }
-    std::cout << "\n";
-}
-
-
-void delete_list(DynList *list) {
-    Node *temp;
-    temp = list->tail;
-    Node *prev;
-    while (temp) {
-        prev = temp->prev;
-        delete temp;
-        temp = prev;
-    }
-    delete list;
-}
-
-
-int enter_pos(DynList *list) {
-    if (list == nullptr) {
-        throw "List is not created! Create it.\n";
-    }
-    int pos = 0;
-    std::cout << "Enter position:\n";
-    std::cin >> pos;
-    if (pos > list->len or pos <= 0) {
-        throw "Position not found. Select option.\n";
-    }
-    return pos;
-}
-
-
-double enter_data(bool f) {
-    double x;
-    if (f) {
-        std::cout << "Enter data:\n";
-    }
-    std::cin >> x;
-    return x;
-}
-
-
-Node *pattern1(Node *select_node) {
+Node *patternsravneniya(Node *select_node) {
     if (select_node->x > 5 and select_node->y > 5) {
         return select_node;
     }
@@ -225,7 +225,9 @@ Node *pattern1(Node *select_node) {
 
 
 Node *get_centre(DynList *list) {
-
+    if (list == nullptr) {
+        throw "List is not created! Create it.\n";
+    }
     Node *temp = list->head;
     while (temp) {
         list->centre->x += temp->x;
@@ -261,6 +263,9 @@ Node *min_node(DynList *list, Node *select_node) {
 
 
 DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, Node *), int p) {
+    if (list == nullptr) {
+        throw "List is not created! Create it.\n";
+    }
     DynList *ListWithPattern = create_list();
     Node *temp = list->head;
     Node *patterned_node;
@@ -278,8 +283,11 @@ DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, N
 
 
 int main() {
+    DynList **A = new DynList *[10];
     DynList *MyList = nullptr;
-    std::cout << "*******Create a random list.*******\n";
+
+
+    /*std::cout << "*******Create a random list.*******\n";
     MyList = create_list();
     init_rand_list(MyList);
     //print_list(MyList);
@@ -295,25 +303,16 @@ int main() {
 
     DynList *MyListWithDistSort = nullptr;
     MyListWithDistSort = use_pattern_and_create(MyListWithDist, min_node, 15);
-    print_list(MyListWithDistSort);
+    print_list(MyListWithDistSort);*/
 
 
-    print_list(MyListWithDist);
-
-    /*try {
-        print_list(MyListWithDist);
-    }
-    catch (char const *str){
-        std::cout << str;
-    }*/
-
-
-    /*std::cout << "Select an option:\n"
+    std::cout << "Select an option:\n"
             "1: Create a random list.\n"
             "2: Print a list.\n"
             "3: Add an element to this position and print list.\n"
             "4: Remove an element from this position and print list.\n"
             "5: Find an element(first and last match).\n"
+            "6: Print N closest nodes to the center of mass(center of mass - first node)."
             "0: Exit.\n";
     while (1) {
         int i;
@@ -327,6 +326,7 @@ int main() {
                     std::cout << "*******Create a random list.*******\n";
                     MyList = create_list();
                     init_rand_list(MyList);
+                    A[0] = MyList;
                     break;
                 }
                 case 2: {
@@ -361,6 +361,31 @@ int main() {
 
                     break;
                 }
+                case 6: {
+                    std::cout << "*******Print N closest nodes to the center of mass(center - first node).*******\n";
+                    get_centre(MyList);
+                    std::cout << "Enter N:\n";
+                    int n = 0;
+                    std::cin >> n;
+                    DynList *MyListWithDist = nullptr;
+                    DynList *MyListWithDistSort = nullptr;
+
+                    MyListWithDist = use_pattern_and_create(MyList, distance_to_centre, MyList->len);
+                    MyListWithDistSort = use_pattern_and_create(MyListWithDist, min_node, n);
+                    std::cout << "Center of mass:      (" << get_centre(MyList)->x
+                              << "; " << get_centre(MyList)->y << ")\n";
+                    print_list(MyListWithDistSort);
+                    A[1] = MyListWithDist;
+                    A[2] = MyListWithDistSort;
+                    break;
+                }
+                case 7: {
+                    for (int k = 0; k < 10; k++) {
+                        if (A[i]) {
+                            delete_list(A[0]);
+                        }
+                    }
+                }
                 default: {
                     std::cout << "*******Invalid option! Try again.*******\n";
                     continue;
@@ -373,8 +398,5 @@ int main() {
         }
         std::cout << "Done! Select an option.\n";
     }
-    if (MyList) {
-        delete_list(MyList);
-    }*/
     return 0;
 }
