@@ -3,12 +3,15 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/sem3_ex3.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dynlist.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem3_ex4.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem4_ex1.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/sem3_ex1.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dynlist.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sem5_ex1.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem3_ex2.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/draft.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sem3_ex1.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
