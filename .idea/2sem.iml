@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dynlist.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem3_ex4.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/sem4_ex1.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dynlist_main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dynlist.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem5_ex1.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sem3_ex2.cpp" isTestSource="false" />

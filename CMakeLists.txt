@@ -11,7 +11,7 @@ add_executable(task1 sem3_ex1.cpp)
 add_executable(task2 sem3_ex2.cpp)
 add_executable(task3 sem3_ex3.cpp)
 add_executable(task4 sem3_ex4.cpp)
-add_executable(task5 sem4_ex1.cpp dynlist.cpp)
+add_executable(task5 dynlist_main.cpp dynlist.cpp)
 add_executable(task6 ${SOURCE_FILES1})
 
 

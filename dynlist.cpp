@@ -117,13 +117,14 @@ std::ostream &operator<<(std::ostream &out, const DynList &list) {
 }
 
 
-std::istream &operator>>(std::istream &in, Point &data) {
+std::istream &operator>>(std::istream &in, DynList::Data_t &data) {
     /*if (list == nullptr or len == 0) {
         throw "\nList is not created! Select option.\n";
     }*/
 
     //std::cout << "Enter data:\n";
-    in >>data.r>> data.y >> data.x;
+    in >> data.y >> data.x;
+
     return in;
 }
 

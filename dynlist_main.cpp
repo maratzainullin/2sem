@@ -107,9 +107,9 @@ int main() {
 
     std::cout << "*******Adding an element.*******\n";
     //int pos = enter_pos(MyList);
-    //Point data; //написать ентер дата для типа данных ДАТА
+    DynList::Data_t data(0, 0); //написать ентер дата для типа данных ДАТА
 
-    //std::cin >> data;
+    std::cin >> data;
 
     //MyList.insert(data, 5);
 

@@ -67,8 +67,10 @@ public:
 
     // бывший void print_list();
     friend std::ostream &operator<<(std::ostream &out, const DynList &list);
-    friend std::istream &operator>>(std::istream &in, Point &data);
+    friend std::istream &operator>>(std::istream &in, DynList::Data_t &data);
 };
 
 
 #endif //INC_2SEM_DYNLIST_H
+
+
