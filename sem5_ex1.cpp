@@ -1,7 +1,3 @@
-//хэш таблицы, добавление, поиск, удаление;
-// Реализация хеш-таблицы через остаток от деления
-// Добавление и поиск элементов осуществлятся через имя (name).
-
 #include <iostream>
 #include <string>
 
@@ -9,17 +5,31 @@
 
 using namespace std;
 
-class Person { // Класс, который содержит немного информации о человеке.
-public:
-    Person *next; // При возникновении коллизии элементы будут помещены в односвязный список.
+
+class Person {
+/* Класс, который содержит немного информации о человеке.
+ * Содержит исключительно информацию о человеке.
+ * Используется как тип данных для элементов списка.
+ *
+ * Для случая коллизий. Не надо класс, содержайщий информацию
+ * о человеке мешать со списками, тем более пересоздавать здесь
+ * обрезанную версию списка.
+ *
+ * Хэш-таблица есть массив, элементы данного массива - двусвязные списки.
+ * Класс Person содержит только данные для элементов уже списка, как дата
+ * в библиотеке списка.
+ *
+ * Нужно как-то реализовать возможность кидать в список тип данных
+ * Person.
+ */
+private:
+    //Person *next;//
     string name;
     int telephone_number;
 
-    Person(string name, int telephone_number = 0) {
-        this->name = name;
-        this->telephone_number = telephone_number;
-        this->next = NULL;
-    }
+public:
+    Person(string _name, int _telephone_number) : name(_name), telephone_number(_telephone_number) {}
+
 
     ~Person() {
         //cout << "Delete " << this->name << endl;
@@ -27,10 +37,25 @@ public:
             delete this->next;
         }
     }
+
 };
 
-class HashTable { // Хеш-таблица, представленная в виде массива элементов (которые в свою очередь представляют список).
+
+class HashTable {
+/* Хэш-таблица есть массив.
+ * Элементы массива - двусвязные списки.
+ * Элементы списка типа Person.
+ *
+ * Необходимо отделить интерфейс от реализации.
+ * Класс Person можно сделать вложенным в класс хэш-таблицы.
+ *
+ * Не должна быть фиксированного размера, должна изменяться
+ * в зависимости от степени загруженности(загруженна должна
+ * быть не более, чем на 30%.
+ */
+private:
     Person *table[SIZE];
+
 
     int hash(int number) {
         return number % SIZE;
@@ -39,9 +64,10 @@ class HashTable { // Хеш-таблица, представленная в ви
 public:
     HashTable() {
         for (int i = 0; i < SIZE; i++) {
-            table[i] = NULL;
+            table[i] = nullptr;
         }
     }
+
 
     ~HashTable() {
         //cout << "Delete table\n";
@@ -50,7 +76,7 @@ public:
         }
     }
 
-    // Вставляет элемент в таблицу
+
     void push(string name, int telephone_number) {
         int hashNumber = hash(telephone_number);
         Person *pers = new Person(name, telephone_number);
@@ -66,7 +92,7 @@ public:
         place->next = pers;
     }
 
-    // Получает элемент из таблицы по его имени.
+
     Person *find(int telephone_number) {
         int hashNumber = hash(telephone_number);
         Person *result = table[hashNumber];
@@ -85,8 +111,8 @@ public:
     }
 };
 
-int main()
-{
+
+int main() {
     HashTable newTable;
     newTable.push("Petr", 800355);
     newTable.push("Vasili", 800596);
@@ -94,8 +120,8 @@ int main()
     newTable.push("Anna", 800948);
     newTable.push("Maria", 800457);
 
-    Person * search = newTable.find(800948);
-    if ( search ) {
+    Person *search = newTable.find(800948);
+    if (search) {
         cout << search->name << endl;
     }
     return 0;

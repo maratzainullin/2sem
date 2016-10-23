@@ -10,6 +10,7 @@ struct Point {
     Point(double _x, double _y) : x(_x), y(_y), r(0) {}
 
     double x, y, r;
+    friend std::istream &operator>>(std::istream &in_stream, Point &data);
 };
 
 
@@ -66,8 +67,8 @@ public:
     //Data_t remove(Node *select_node);*/
 
     // бывший void print_list();
-    friend std::ostream &operator<<(std::ostream &out, const DynList &list);
-    friend std::istream &operator>>(std::istream &in, DynList::Data_t &data);
+    friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
+    //friend std::istream &operator>>(std::istream &in_stream, DynList::Data_t &data);
 };
 
 

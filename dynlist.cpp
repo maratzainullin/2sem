@@ -94,7 +94,7 @@ DynList::Node *DynList::pop(int position) {
 }
 
 
-std::ostream &operator<<(std::ostream &out, const DynList &list) {
+std::ostream &operator<<(std::ostream &out_stream, const DynList &list) {
     /*if (list == nullptr or len == 0) {
         throw "\nList is not created! Select option.\n";
     }*/
@@ -102,30 +102,30 @@ std::ostream &operator<<(std::ostream &out, const DynList &list) {
     DynList::Node *temp = list.head;
     for (int i = 1; i <= list.len; i++) {
         if (k == OUT_LEN) {
-            out << "\n*";
+            out_stream << "\n*";
             k = 0;
         }
-        out << std::setw(7) << std::fixed << std::setprecision(0) << i << ": ("
+        out_stream << std::setw(7) << std::fixed << std::setprecision(0) << i << ": ("
             << std::setw(2) << temp->data.x << "; "
             << std::setw(2) << temp->data.y << ") "
             << std::setw(5) << std::fixed << std::setprecision(2) << temp->data.r;
         temp = temp->next;
         k++;
     }
-    out << "\n";
-    return out;
+    out_stream << "\n";
+    return out_stream;
 }
 
 
-std::istream &operator>>(std::istream &in, DynList::Data_t &data) {
+std::istream &operator>>(std::istream &in_stream, Point &data) {
     /*if (list == nullptr or len == 0) {
         throw "\nList is not created! Select option.\n";
     }*/
 
     //std::cout << "Enter data:\n";
-    in >> data.y >> data.x;
+    in_stream >> data.y >> data.x;
 
-    return in;
+    return in_stream;
 }
 
 

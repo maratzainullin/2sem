@@ -111,7 +111,7 @@ int main() {
 
     std::cin >> data;
 
-    //MyList.insert(data, 5);
+    MyList.insert(data, 5);
 
     std::cout << "*******Print a list.*******";
     std::cout << MyList;
