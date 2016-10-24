@@ -6,26 +6,18 @@
 #include <math.h>
 #include "dynlist.h"
 
-/*DynList::Data_t enter_data() {
-    DynList::Data_t data(0, 0);
-    double x;
-    std::cout << "Enter data:\n";
-    std::cin >> data.x >> data.y >> "\n";
-    return data;
-}*/
-
-int enter_pos(DynList list) {
-    /*if (&list == nullptr) {                            //arning: the address of 'list' will never be NULL
+/*int enter_pos(DynList list) {
+    if (&list == nullptr) {                            //arning: the address of 'list' will never be NULL
         throw "List is not created! Create it.\n";
-    }*/
+    }
     int pos = 0;
     std::cout << "Enter position:\n";
     std::cin >> pos;
-    /*if (pos > list->len or pos <= 0) {
+    if (pos > list->len or pos <= 0) {
         throw "Position not found. Select option.\n";
-    }*/
+    }
     return pos;
-}
+}*/
 
 /*Node *patternsravneniya(Node *select_node) {
     if (select_node->x > 5 and select_node->y > 5) {
@@ -96,7 +88,6 @@ DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, N
 
 int main() {
 
-
     std::cout << "*******Create a random list.*******\n";
     DynList MyList = DynList();
     MyList.init_rand_list();
@@ -105,13 +96,11 @@ int main() {
     std::cout << "*******Print a list.*******";
     std::cout << MyList;
 
+
     std::cout << "*******Adding an element.*******\n";
-    //int pos = enter_pos(MyList);
-    DynList::Data_t data(0, 0); //написать ентер дата для типа данных ДАТА
-
-    std::cin >> data;
-
-    MyList.insert(data, 5);
+    DynList::Data_t data;
+    //std::cin >> data;
+    MyList.pop();
 
     std::cout << "*******Print a list.*******";
     std::cout << MyList;

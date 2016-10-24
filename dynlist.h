@@ -2,21 +2,14 @@
 #define INC_2SEM_DYNLIST_H
 
 #include <ostream>
+#include <stdlib.h>
+#include "data.h"
 
-/* ПОльзуясь библиотекой, знай, что она бросает исключение string*/
-
-
-struct Point {
-    Point(double _x, double _y) : x(_x), y(_y), r(0) {}
-
-    double x, y, r;
-    friend std::istream &operator>>(std::istream &in_stream, Point &data);
-};
+/* Пoльзуясь библиотекой, знай, что она бросает исключение string. */
 
 
 struct DynList {
 public:
-
     typedef Point Data_t;
 
     struct Node {
@@ -37,7 +30,7 @@ public:
     DynList() : head(nullptr), tail(nullptr), len(0) {}
 
     // бывший delete_list()
-    ~DynList(){
+    ~DynList() {
         Node *temp;
         temp = tail;
         Node *prev;
@@ -68,7 +61,6 @@ public:
 
     // бывший void print_list();
     friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
-    //friend std::istream &operator>>(std::istream &in_stream, DynList::Data_t &data);
 };
 
 
