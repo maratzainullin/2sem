@@ -88,21 +88,46 @@ DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, N
 
 int main() {
 
-    std::cout << "*******Create a random list.*******\n";
     DynList<Point_2D> MyList_2D;
     DynList<Point_3D> Mylist_3D;
     DynList<Person> Number_Book;
+
+    /*std::cout << "*******Create a random 2D list.*******\n";
     MyList_2D.init_rand_list();
-    Mylist_3D.init_rand_list();
+    std::cout << "*******Create a random 3D list.*******\n";
+    Mylist_3D.init_rand_list();*/
+    std::cout << "*******Create a random Number Book.*******\n";
     Number_Book.init_rand_list();
 
 
-    std::cout << "*******Print a list.*******";
+    /*std::cout << "*******Print a 2D list.*******";
     MyList_2D.print(MyList_2D);
-    Mylist_3D.print(Mylist_3D);
+    std::cout << "*******Print a 3D list.*******";
+    Mylist_3D.print(Mylist_3D);*/
+    std::cout << "*******Print a Number Book.*******";
     Number_Book.print(Number_Book);
 
+    Point_2D point2d;
+    Point_3D point3d;
+    Person person;
 
+    /*std::cout << "*******Adding an element in 2D list.*******\n";
+    std::cin >> point2d;
+    MyList_2D.insert(point2d, 6);
+    std::cout << "*******Print a 2D list.*******";
+    MyList_2D.print(MyList_2D);
+
+    std::cout << "*******Adding an element in 3D list.*******\n";
+    std::cin >> point3d;
+    Mylist_3D.insert(point3d, 6);
+    std::cout << "*******Print a 3D list.*******";
+    Mylist_3D.print(Mylist_3D);*/
+
+    std::cout << "*******Adding an element in Name Book.*******\n";
+    std::cin >> person;
+    Number_Book.insert(person, 6);
+    std::cout << "*******Print a Number Book.*******";
+    Number_Book.print(Number_Book);
 
 
 

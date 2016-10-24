@@ -112,8 +112,8 @@ void DynList<Data_T>::print(DynList<Data_T> &list) {
 }
 
 
-/*template<class Data_T>
-void DynList::insert(Data_T data, int position) {
+template<class Data_T>
+void DynList<Data_T>::insert(Data_T data, int position) {
     //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
     Node *insert_node = new Node(data);
     Node *select_node = get_to(position);
@@ -130,9 +130,9 @@ void DynList::insert(Data_T data, int position) {
     len++;
 }
 
-
+/*
 template<class Data_T>
-DynList::Node *DynList::pop(int position) {
+DynList<Data_T>::Node *DynList<Data_T>::pop(int position) {
     Node *select_node = get_to(position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
@@ -158,10 +158,10 @@ template<class Data_T>
 
 template<class Data_T>
 
-
+*/
 
 template<class Data_T>
-DynList::Node *DynList::get_to(int position) {
+typename DynList<Data_T>::Node *DynList<Data_T>::get_to(int position) {
     Node *temp = head;
     int i = 1;
     while (i < position) {
@@ -170,7 +170,7 @@ DynList::Node *DynList::get_to(int position) {
         i++;
     }
     return temp;
-}*/
+}
 
 /*template<class Data_T>
 std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) {

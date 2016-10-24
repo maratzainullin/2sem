@@ -7,7 +7,6 @@
 
 #define P_MULTIPLIER 100
 
-
 struct Point_2D {
     int len_of_line = 5;
     double x, y, r;
@@ -21,7 +20,6 @@ struct Point_2D {
     friend std::istream &operator>>(std::istream &in_stream, Point_2D &data);
 
 };
-
 
 struct Point_3D {
     int len_of_line = 4;
@@ -37,10 +35,9 @@ struct Point_3D {
 
 };
 
-
 struct Person {
     int len_of_line = 4;
-    int telephone_number;
+    long long int telephone_number;
     std::string name;
 
     Person() : telephone_number(0), name("-") {}

@@ -45,23 +45,35 @@ std::istream &operator>>(std::istream &in_stream, Point_3D &data) {
 }
 
 
-
-
 void Person::rand(int multiplier) {
-    telephone_number = std::rand() % 100*multiplier;
-    name = "aaaa";
+    std::string get_randomStr(int len);
+
+    telephone_number = std::rand() % 1000000 + 9999999;
+
+    name = get_randomStr(7);
 }
 
 std::ostream &operator<<(std::ostream &out_stream, const Person &data) {
     out_stream << "("
                << std::setw(8) << data.name << "; "
-               << std::setw(10) << data.telephone_number << ")"
-               << std::setw(4);
+               << std::setw(11) << data.telephone_number << ")"
+               << std::setw(3);
     return out_stream;
 }
 
 std::istream &operator>>(std::istream &in_stream, Person &data) {
-    std::cout << "Enter data:\n";
+    std::cout << "Enter data(name, telephone_number):\n";
     in_stream >> data.name >> data.telephone_number;
     return in_stream;
+}
+
+std::string get_randomStr(int len) {
+    static std::string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::string result;
+    result.resize(len);
+
+    for (int i = 0; i < len; i++)
+        result[i] = charset[rand() % charset.length()];
+
+    return result;
 }
