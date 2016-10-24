@@ -89,12 +89,18 @@ DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, N
 int main() {
 
     std::cout << "*******Create a random list.*******\n";
-    DynList<Point> MyList;
-    MyList.init_rand_list();
+    DynList<Point_2D> MyList_2D;
+    DynList<Point_3D> Mylist_3D;
+    DynList<Person> Number_Book;
+    MyList_2D.init_rand_list();
+    Mylist_3D.init_rand_list();
+    Number_Book.init_rand_list();
 
 
     std::cout << "*******Print a list.*******";
-    MyList.print(MyList);
+    MyList_2D.print(MyList_2D);
+    Mylist_3D.print(Mylist_3D);
+    Number_Book.print(Number_Book);
 
 
 

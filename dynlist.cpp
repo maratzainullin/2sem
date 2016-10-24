@@ -57,26 +57,7 @@
 }*/
 
 
-/*std::ostream &operator<<(std::ostream &out_stream, const DynList &list) {
-   // if (list == nullptr or len == 0) {
-    //    throw "\nList is not created! Select option.\n";
-    //}
-    //каждый тип данных имеет свою длину при выводе. out_line - число,
-    //показывающее сколько данных будет выведено на одной строке.
-    int k = list.head->data.len_of_line;
-    DynList::Node *temp = list.head;
-    for (int i = 1; i <= list.len; i++) {
-        if (k == list.head->data.len_of_line) {
-            out_stream << "\n*";
-            k = 0;
-        }
-        out_stream << std::setw(5) << i << ": " << temp->data;
-        temp = temp->next;
-        k++;
-    }
-    out_stream << "\n";
-    return out_stream;
-}*/
+
 
 
 /*

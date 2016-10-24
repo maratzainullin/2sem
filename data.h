@@ -2,23 +2,55 @@
 #define INC_2SEM_DATA_H
 
 #include <ostream>
+#include <string>
 #include <stdlib.h>
 
 #define P_MULTIPLIER 100
 
 
-struct Point {
+struct Point_2D {
     int len_of_line = 5;
     double x, y, r;
 
-    Point() : x(0), y(0), r(0) {}
+    Point_2D() : x(0), y(0), r(0) {}
 
     void rand(int multiplier);
 
-    friend std::ostream &operator<<(std::ostream &out_stream, const Point &data);
+    friend std::ostream &operator<<(std::ostream &out_stream, const Point_2D &data);
 
-    friend std::istream &operator>>(std::istream &in_stream, Point &data);
+    friend std::istream &operator>>(std::istream &in_stream, Point_2D &data);
+
 };
 
+
+struct Point_3D {
+    int len_of_line = 4;
+    double x, y, z, r;
+
+    Point_3D() : x(0), y(0), z(0), r(0) {}
+
+    void rand(int multiplier);
+
+    friend std::ostream &operator<<(std::ostream &out_stream, const Point_3D &data);
+
+    friend std::istream &operator>>(std::istream &in_stream, Point_3D &data);
+
+};
+
+
+struct Person {
+    int len_of_line = 4;
+    int telephone_number;
+    std::string name;
+
+    Person() : telephone_number(0), name("-") {}
+
+    void rand(int multiplier);
+
+    friend std::ostream &operator<<(std::ostream &out_stream, const Person &data);
+
+    friend std::istream &operator>>(std::istream &in_stream, Person &data);
+
+};
 
 #endif //INC_2SEM_DATA_H

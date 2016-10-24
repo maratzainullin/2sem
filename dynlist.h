@@ -58,13 +58,12 @@ public:
 
     void print(DynList<Data_T> &list);
 
-    // требуется короткое описание
-
     //Data_T remove(Node *select_node);*/
 
     // бывший void print_list();
     //friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
 };
+
 
 template<class Data_T>
 void DynList<Data_T>::init_rand_list() {
@@ -76,6 +75,7 @@ void DynList<Data_T>::init_rand_list() {
         push_back(data);
     }
 }
+
 
 template<class Data_T>
 void DynList<Data_T>::push_back(Data_T data) {
@@ -91,6 +91,7 @@ void DynList<Data_T>::push_back(Data_T data) {
         head = tail = temp;
     }
 }
+
 
 template<class Data_T>
 void DynList<Data_T>::print(DynList<Data_T> &list) {
@@ -109,6 +110,67 @@ void DynList<Data_T>::print(DynList<Data_T> &list) {
     std::cout << "\n";
     return;
 }
+
+
+/*template<class Data_T>
+void DynList::insert(Data_T data, int position) {
+    //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
+    Node *insert_node = new Node(data);
+    Node *select_node = get_to(position);
+    insert_node->data = data;
+    insert_node->prev = select_node->prev;
+    insert_node->next = select_node;
+    if (select_node->prev) {
+        select_node->prev->next = insert_node;
+    }
+    select_node->prev = insert_node;
+    if (!insert_node->prev) {
+        head = insert_node;
+    }
+    len++;
+}
+
+
+template<class Data_T>
+DynList::Node *DynList::pop(int position) {
+    Node *select_node = get_to(position);                  //Если удаляем не крайний элемент.
+    if (select_node->prev) {
+        select_node->prev->next = select_node->next;
+    }
+    if (select_node->next) {
+        select_node->next->prev = select_node->prev;
+    }
+    if (!select_node->prev) {
+        head = select_node->next;                             //Если удаляем крайний элемент.
+    }
+    if (!select_node->next) {
+        tail = select_node->prev;
+    }
+    //delete select_node;
+    len--;
+    return select_node;
+}
+
+
+template<class Data_T>
+
+
+
+template<class Data_T>
+
+
+
+template<class Data_T>
+DynList::Node *DynList::get_to(int position) {
+    Node *temp = head;
+    int i = 1;
+    while (i < position) {
+        if (!temp) throw "tried to get to unreacheable position";
+        temp = temp->next;
+        i++;
+    }
+    return temp;
+}*/
 
 /*template<class Data_T>
 std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) {
