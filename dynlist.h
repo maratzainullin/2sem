@@ -8,16 +8,17 @@
 /* Пoльзуясь библиотекой, знай, что она бросает исключение string. */
 
 
-struct DynList {
+template<class Data_T>
+class DynList {
 public:
-    typedef Point Data_t;
+
 
     struct Node {
         int i;
         Node *next, *prev;
-        Data_t data;
+        Data_T data;
 
-        Node(Data_t init_data) : next(nullptr), prev(nullptr), data(init_data) {}       //контсруктор
+        Node(Data_T init_data) : next(nullptr), prev(nullptr), data(init_data) {}       //контсруктор
     };
 
 private:
@@ -43,25 +44,94 @@ public:
 
     void init_rand_list();
 
-    int first_match(Data_t data);
+    //int first_match(Data_T data);
 
-    int last_match(Data_t data);
+    //int last_match(Data_T data);
 
-    void push_back(Data_t data);
+    void push_back(Data_T data);
 
     Node *get_to(int position);
 
     Node *pop(int position = 0);
 
-    void insert(Data_t data, int position);
+    void insert(Data_T data, int position);
+
+    void print(DynList<Data_T> &list);
 
     // требуется короткое описание
 
-    //Data_t remove(Node *select_node);*/
+    //Data_T remove(Node *select_node);*/
 
     // бывший void print_list();
-    friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
+    //friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
 };
+
+template<class Data_T>
+void DynList<Data_T>::init_rand_list() {
+    std::cout << "Enter the length of the list:\n";
+    std::cin >> len;
+    for (int i = 0; i < len; i++) {
+        Data_T data;
+        data.rand(P_MULTIPLIER);
+        push_back(data);
+    }
+}
+
+template<class Data_T>
+void DynList<Data_T>::push_back(Data_T data) {
+    Node *temp = new Node(data);
+    temp->next = nullptr;
+    temp->data = data;
+    if (head) {
+        temp->prev = tail;
+        tail->next = temp;
+        tail = temp;
+    } else {
+        temp->prev = nullptr;
+        head = tail = temp;
+    }
+}
+
+template<class Data_T>
+void DynList<Data_T>::print(DynList<Data_T> &list) {
+    int k = list.head->data.len_of_line;
+    Node *temp;
+    temp = list.head;
+    for (int i = 1; i <= list.len; i++) {
+        if (k == list.head->data.len_of_line) {
+            std::cout << "\n*";
+            k = 0;
+        }
+        std::cout << std::setw(5) << i << ": " << temp->data;
+        temp = temp->next;
+        k++;
+    }
+    std::cout << "\n";
+    return;
+}
+
+/*template<class Data_T>
+std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) {
+    // if (list == nullptr or len == 0) {
+    //    throw "\nList is not created! Select option.\n";
+    //}
+    //каждый тип данных имеет свою длину при выводе. out_line - число,
+    //показывающее сколько данных будет выведено на одной строке.
+    int k = list.head->data.len_of_line;
+    Node *temp;
+    temp = list.head;
+    for (int i = 1; i <= list.len; i++) {
+        if (k == list.head->data.len_of_line) {
+            out_stream << "\n*";
+            k = 0;
+        }
+        out_stream << std::setw(5) << i << ": " << temp->data;
+        temp = temp->next;
+        k++;
+    }
+    out_stream << "\n";
+    return out_stream;
+}*/
 
 
 #endif //INC_2SEM_DYNLIST_H

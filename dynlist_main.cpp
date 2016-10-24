@@ -89,21 +89,15 @@ DynList *use_pattern_and_create(DynList *list, Node *(*pattern_ptr)(DynList *, N
 int main() {
 
     std::cout << "*******Create a random list.*******\n";
-    DynList MyList = DynList();
+    DynList<Point> MyList;
     MyList.init_rand_list();
 
 
     std::cout << "*******Print a list.*******";
-    std::cout << MyList;
+    MyList.print(MyList);
 
 
-    std::cout << "*******Adding an element.*******\n";
-    DynList::Data_t data;
-    //std::cin >> data;
-    MyList.pop();
 
-    std::cout << "*******Print a list.*******";
-    std::cout << MyList;
 
 
 /*

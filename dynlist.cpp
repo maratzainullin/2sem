@@ -4,7 +4,7 @@
 #include "dynlist.h"
 
 
-DynList::Node *DynList::get_to(int position) {
+/*DynList::Node *DynList::get_to(int position) {
     Node *temp = head;
     int i = 1;
     while (i < position) {
@@ -13,25 +13,13 @@ DynList::Node *DynList::get_to(int position) {
         i++;
     }
     return temp;
-}
+}*/
 
 
-void DynList::push_back(Data_t data) {
-    Node *temp = new Node(data);
-    temp->next = nullptr;
-    temp->data = data;
-    if (head) {                                   // Если список не пуст
-        temp->prev = tail;                        // Указываем адрес на предыдущий элемент в соотв. поле
-        tail->next = temp;                        // Указываем адрес следующего за хвостом элемента
-        tail = temp;                              //Меняем адрес хвоста
-    } else {                                            //Если список пустой
-        temp->prev = nullptr;                           // Предыдущий элемент указывает в пустоту
-        head = tail = temp;                 // Голова=Хвост=тот элемент, что сейчас добавили
-    }
-}
+
 /* push_back и insert можно объединить
  */
-void DynList::insert(Data_t data, int position) {
+/*void DynList::insert(Data_T data, int position) {
     //Добавляет элемент в указанную позицию, остальные элементы сдвигает(список удлиняется на один элемент)
     Node *insert_node = new Node(data);
     Node *select_node = get_to(position);
@@ -46,10 +34,10 @@ void DynList::insert(Data_t data, int position) {
         head = insert_node;
     }
     len++;
-}
+}*/
 
 
-DynList::Node *DynList::pop(int position) {
+/*DynList::Node *DynList::pop(int position) {
     Node *select_node = get_to(position);                  //Если удаляем не крайний элемент.
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
@@ -66,13 +54,13 @@ DynList::Node *DynList::pop(int position) {
     //delete select_node;
     len--;
     return select_node;
-}
+}*/
 
 
-std::ostream &operator<<(std::ostream &out_stream, const DynList &list) {
-    /*if (list == nullptr or len == 0) {
-        throw "\nList is not created! Select option.\n";
-    }*/
+/*std::ostream &operator<<(std::ostream &out_stream, const DynList &list) {
+   // if (list == nullptr or len == 0) {
+    //    throw "\nList is not created! Select option.\n";
+    //}
     //каждый тип данных имеет свою длину при выводе. out_line - число,
     //показывающее сколько данных будет выведено на одной строке.
     int k = list.head->data.len_of_line;
@@ -88,7 +76,7 @@ std::ostream &operator<<(std::ostream &out_stream, const DynList &list) {
     }
     out_stream << "\n";
     return out_stream;
-}
+}*/
 
 
 /*
@@ -110,18 +98,9 @@ Node *remove_from(DynList *list, Node *select_node) {
 }*/
 
 
-void DynList::init_rand_list() {
-    std::cout << "Enter the length of the list:\n";
-    std::cin >> len;
-    for (int i = 0; i < len; i++) {
-        Data_t data;
-        data.rand(P_MULTIPLIER);
-        push_back(data);
-    }
-}
 
 
-int DynList::first_match(Data_t data) {
+/*int DynList::first_match(Data_T data) {
     Node *temp = head;
     int i = 1;
     while (temp->data.x != data.x or temp->data.y != data.y) {
@@ -134,7 +113,7 @@ int DynList::first_match(Data_t data) {
 }
 
 
-int DynList::last_match(Data_t data) {
+int DynList::last_match(Data_T data) {
     Node *temp = tail;
     int i = len;
     while ((temp->data.x != data.x) or (temp->data.y != data.y)) {
@@ -144,4 +123,4 @@ int DynList::last_match(Data_t data) {
             throw "Element not found. Select option.\n";
     };
     return i;
-}
+}*/
