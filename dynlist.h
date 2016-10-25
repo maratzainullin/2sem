@@ -5,14 +5,10 @@
 #include <stdlib.h>
 #include "data.h"
 
-/* Пoльзуясь библиотекой, знай, что она бросает исключение string. */
-
 
 template<class Data_T>
 class DynList {
 public:
-
-
     struct Node {
         int i;
         Node *next, *prev;
@@ -27,10 +23,8 @@ private:
     int len;
 
 public:
-    //Создание пустого списка.
     DynList() : head(nullptr), tail(nullptr), len(0) {}
 
-    // бывший delete_list()
     ~DynList() {
         Node *temp;
         temp = tail;
@@ -42,26 +36,27 @@ public:
         }
     };
 
-    void init_rand_list();
-
-    //int first_match(Data_T data);
-
-    //int last_match(Data_T data);
-
-    void push_back(Data_T data);
-
     Node *get_to(int position);
 
     Node *pop(int position = 0);
+
+    void push_back(Data_T data);
 
     void insert(Data_T data, int position);
 
     void print(DynList<Data_T> &list);
 
-    //Data_T remove(Node *select_node);*/
+    /* Следующие функции дополнительные, они требуют перегрузки
+    * функции rand() и оператора !=.
+    */
+    void init_rand_list();                            //требует перегрузку функции rand() для вашего типа данных.
 
-    // бывший void print_list();
-    //friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);
+    int first_match(Data_T data);                     //требует перегрузку оператора != для вашего типа данных.
+
+    int last_match(Data_T data);                      //требует перегрузку оператора != для вашего типа данных.
+
+    /*Не работает :с
+     * friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);*/
 };
 
 
@@ -130,10 +125,10 @@ void DynList<Data_T>::insert(Data_T data, int position) {
     len++;
 }
 
-/*
+
 template<class Data_T>
-DynList<Data_T>::Node *DynList<Data_T>::pop(int position) {
-    Node *select_node = get_to(position);                  //Если удаляем не крайний элемент.
+typename DynList<Data_T>::Node *DynList<Data_T>::pop(int position) {
+    Node *select_node = get_to(position);
     if (select_node->prev) {
         select_node->prev->next = select_node->next;
     }
@@ -141,24 +136,15 @@ DynList<Data_T>::Node *DynList<Data_T>::pop(int position) {
         select_node->next->prev = select_node->prev;
     }
     if (!select_node->prev) {
-        head = select_node->next;                             //Если удаляем крайний элемент.
+        head = select_node->next;
     }
     if (!select_node->next) {
         tail = select_node->prev;
     }
-    //delete select_node;
     len--;
     return select_node;
-}
+}        //зачем здесь typename?
 
-
-template<class Data_T>
-
-
-
-template<class Data_T>
-
-*/
 
 template<class Data_T>
 typename DynList<Data_T>::Node *DynList<Data_T>::get_to(int position) {
@@ -170,7 +156,36 @@ typename DynList<Data_T>::Node *DynList<Data_T>::get_to(int position) {
         i++;
     }
     return temp;
+}     //зачем здесь typename?
+
+
+template<class Data_T>
+int DynList<Data_T>::first_match(Data_T data) {
+    Node *temp = head;
+    int i = 1;
+    while (temp->data != data) {
+        temp = temp->next;
+        i++;
+        if (temp == nullptr)
+            throw "Node not found. Try againSSS. ";
+    };
+    return i;
 }
+
+
+template<class Data_T>
+int DynList<Data_T>::last_match(Data_T data) {
+    Node *temp = tail;
+    int i = len;
+    while (temp->data != data) {
+        temp = temp->prev;
+        i--;
+        if (temp == nullptr)
+            throw "Element not found. Select option.\n";
+    };
+    return i;
+}
+
 
 /*template<class Data_T>
 std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) {
@@ -195,7 +210,4 @@ std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) 
     return out_stream;
 }*/
 
-
 #endif //INC_2SEM_DYNLIST_H
-
-

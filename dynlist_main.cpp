@@ -125,10 +125,19 @@ int main() {
 
     std::cout << "*******Adding an element in Name Book.*******\n";
     std::cin >> person;
-    Number_Book.insert(person, 6);
+    Number_Book.insert(person, 15);
+    Number_Book.insert(person, 5);
     std::cout << "*******Print a Number Book.*******";
     Number_Book.print(Number_Book);
-
+    std::cout << "*******Removing an element in Name Book.*******\n";
+    Number_Book.pop(7);
+    std::cout << "*******Print a Number Book.*******";
+    Number_Book.print(Number_Book);
+    std::cout << "*******Finding an element(first and last match).*******\n";
+    std::cin >> person;
+    std::cout << "First match: " << Number_Book.first_match(person)
+              << ", last match: " << Number_Book.last_match(person)
+              << ".\n";
 
 
 /*

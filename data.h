@@ -7,6 +7,8 @@
 
 #define P_MULTIPLIER 100
 
+
+//Двумерная точка.
 struct Point_2D {
     int len_of_line = 5;
     double x, y, r;
@@ -15,12 +17,15 @@ struct Point_2D {
 
     void rand(int multiplier);
 
+    bool operator!=(Point_2D p);
+
     friend std::ostream &operator<<(std::ostream &out_stream, const Point_2D &data);
 
     friend std::istream &operator>>(std::istream &in_stream, Point_2D &data);
 
 };
 
+//Трехмерная точка.
 struct Point_3D {
     int len_of_line = 4;
     double x, y, z, r;
@@ -29,12 +34,15 @@ struct Point_3D {
 
     void rand(int multiplier);
 
+    bool operator!=(Point_3D p);
+
     friend std::ostream &operator<<(std::ostream &out_stream, const Point_3D &data);
 
     friend std::istream &operator>>(std::istream &in_stream, Point_3D &data);
 
 };
 
+//Человек с телефоном.
 struct Person {
     int len_of_line = 4;
     long long int telephone_number;
@@ -44,10 +52,13 @@ struct Person {
 
     void rand(int multiplier);
 
+    bool operator!=(Person p);
+
     friend std::ostream &operator<<(std::ostream &out_stream, const Person &data);
 
     friend std::istream &operator>>(std::istream &in_stream, Person &data);
 
 };
+
 
 #endif //INC_2SEM_DATA_H
