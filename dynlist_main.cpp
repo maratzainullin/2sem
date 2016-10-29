@@ -91,13 +91,23 @@ int main() {
     DynList<Point_2D> MyList_2D;
     DynList<Point_3D> Mylist_3D;
     DynList<Person> Number_Book;
+    DynList<int> I;
+
+    Point_2D point2d;
+    Point_3D point3d;
+    Person person;
 
     /*std::cout << "*******Create a random 2D list.*******\n";
     MyList_2D.init_rand_list();
     std::cout << "*******Create a random 3D list.*******\n";
     Mylist_3D.init_rand_list();*/
     std::cout << "*******Create a random Number Book.*******\n";
-    Number_Book.init_rand_list();
+    for(int i; i<100; i++){
+        Number_Book.push_back(Person::frand(100));
+        MyList_2D.push_back(Point_2D::frand(100));
+        I.push_back(rand()%100);
+    }
+    //Number_Book.init_rand_list();
 
 
     /*std::cout << "*******Print a 2D list.*******";
@@ -105,11 +115,18 @@ int main() {
     std::cout << "*******Print a 3D list.*******";
     Mylist_3D.print(Mylist_3D);*/
     std::cout << "*******Print a Number Book.*******";
-    Number_Book.print(Number_Book);
+    Number_Book.print();
+    I.print();
+    I.insert(99999, 5);
+    I.insert(99999, 98);
+    I.print();
+    I.insert(99999, 5);
+    I.print();
+    I.pop(5);
+    std::cout << I.first_match(99999) << std::endl;
+    std::cout << I.last_match(99999) << std::endl;
+    I.print();
 
-    Point_2D point2d;
-    Point_3D point3d;
-    Person person;
 
     /*std::cout << "*******Adding an element in 2D list.*******\n";
     std::cin >> point2d;
@@ -123,22 +140,22 @@ int main() {
     std::cout << "*******Print a 3D list.*******";
     Mylist_3D.print(Mylist_3D);*/
 
-    std::cout << "*******Adding an element in Name Book.*******\n";
+   /* std::cout << "*******Adding an element in Name Book.*******\n";
     std::cin >> person;
     Number_Book.insert(person, 15);
     Number_Book.insert(person, 5);
     std::cout << "*******Print a Number Book.*******";
-    Number_Book.print(Number_Book);
+    Number_Book.print();
     std::cout << "*******Removing an element in Name Book.*******\n";
     Number_Book.pop(7);
     std::cout << "*******Print a Number Book.*******";
-    Number_Book.print(Number_Book);
+    Number_Book.print();
     std::cout << "*******Finding an element(first and last match).*******\n";
     std::cin >> person;
     std::cout << "First match: " << Number_Book.first_match(person)
               << ", last match: " << Number_Book.last_match(person)
               << ".\n";
-
+*/
 
 /*
     std::cout << "Select an option:\n"

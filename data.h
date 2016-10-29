@@ -5,8 +5,6 @@
 #include <string>
 #include <stdlib.h>
 
-#define P_MULTIPLIER 100
-
 
 //Двумерная точка.
 struct Point_2D {
@@ -15,7 +13,7 @@ struct Point_2D {
 
     Point_2D() : x(0), y(0), r(0) {}
 
-    void rand(int multiplier);
+    static Point_2D frand(int multiplier);
 
     bool operator!=(Point_2D p);
 
@@ -32,7 +30,7 @@ struct Point_3D {
 
     Point_3D() : x(0), y(0), z(0), r(0) {}
 
-    void rand(int multiplier);
+    static Point_3D frand(int multiplier);
 
     bool operator!=(Point_3D p);
 
@@ -50,7 +48,7 @@ struct Person {
 
     Person() : telephone_number(0), name("-") {}
 
-    void rand(int multiplier);
+    static Person frand(int multiplier);
 
     bool operator!=(Person p);
 
@@ -59,6 +57,7 @@ struct Person {
     friend std::istream &operator>>(std::istream &in_stream, Person &data);
 
 };
+
 
 
 #endif //INC_2SEM_DATA_H

@@ -6,9 +6,11 @@
 
 //Двумерная точка.
 
-void Point_2D::rand(int multiplier) {
-    x = std::rand() % multiplier;
-    y = std::rand() % multiplier;
+Point_2D Point_2D::frand(int multiplier) {
+    Point_2D temp;
+    temp.x = std::rand() % multiplier;
+    temp.y = std::rand() % multiplier;
+    return temp;
 }
 
 bool Point_2D::operator!=(Point_2D p) {
@@ -36,10 +38,12 @@ std::istream &operator>>(std::istream &in_stream, Point_2D &data) {
 
 //Трехмерная точка.
 
-void Point_3D::rand(int multiplier) {
-    x = std::rand() % multiplier;
-    y = std::rand() % multiplier;
-    z = std::rand() % multiplier;
+Point_3D Point_3D::frand(int multiplier) {
+    Point_3D temp;
+    temp.x = std::rand() % multiplier;
+    temp.y = std::rand() % multiplier;
+    temp.z = std::rand() % multiplier;
+    return  temp;
 }
 
 bool Point_3D::operator!=(Point_3D p) {
@@ -68,12 +72,12 @@ std::istream &operator>>(std::istream &in_stream, Point_3D &data) {
 
 //Человек с телефоном.
 
-void Person::rand(int multiplier) {
+Person Person::frand(int multiplier) {
+    Person temp;
     std::string get_randomStr(int len);
-
-    telephone_number = std::rand() % 100000 + 99999;
-
-    name = get_randomStr(7);
+    temp.telephone_number = std::rand() % 100000 + 99999;
+    temp.name = get_randomStr(7);
+    return temp;
 }
 
 bool Person::operator!=(Person p) {

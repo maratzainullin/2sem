@@ -2,15 +2,16 @@
 #define INC_2SEM_DYNLIST_H
 
 #include <ostream>
+#include <iomanip>
 #include <stdlib.h>
 #include "data.h"
+#include <string>
 
 
 template<class Data_T>
 class DynList {
 public:
     struct Node {
-        int i;
         Node *next, *prev;
         Data_T data;
 
@@ -18,8 +19,7 @@ public:
     };
 
 private:
-    Node *head;
-    Node *tail;
+    Node *head, *tail;
     int len;
 
 public:
@@ -34,7 +34,7 @@ public:
             delete temp;
             temp = prev;
         }
-    };
+    }
 
     Node *get_to(int position);
 
@@ -44,32 +44,15 @@ public:
 
     void insert(Data_T data, int position);
 
-    void print(DynList<Data_T> &list);
+    void print();//Нет корректного вывода для общего типа.
 
-    /* Следующие функции дополнительные, они требуют перегрузки
-    * функции rand() и оператора !=.
-    */
-    void init_rand_list();                            //требует перегрузку функции rand() для вашего типа данных.
+    int first_match(Data_T data);//Требуют перегрузки !=.
 
-    int first_match(Data_T data);                     //требует перегрузку оператора != для вашего типа данных.
-
-    int last_match(Data_T data);                      //требует перегрузку оператора != для вашего типа данных.
+    int last_match(Data_T data);
 
     /*Не работает :с
      * friend std::ostream &operator<<(std::ostream &out_stream, const DynList &list);*/
 };
-
-
-template<class Data_T>
-void DynList<Data_T>::init_rand_list() {
-    std::cout << "Enter the length of the list:\n";
-    std::cin >> len;
-    for (int i = 0; i < len; i++) {
-        Data_T data;
-        data.rand(P_MULTIPLIER);
-        push_back(data);
-    }
-}
 
 
 template<class Data_T>
@@ -85,16 +68,19 @@ void DynList<Data_T>::push_back(Data_T data) {
         temp->prev = nullptr;
         head = tail = temp;
     }
+    len++;
 }
 
 
 template<class Data_T>
-void DynList<Data_T>::print(DynList<Data_T> &list) {
-    int k = list.head->data.len_of_line;
+void DynList<Data_T>::print() {
+    //int k = head->data.len_of_line;
+    int k = 3;
     Node *temp;
-    temp = list.head;
-    for (int i = 1; i <= list.len; i++) {
-        if (k == list.head->data.len_of_line) {
+    temp = head;
+    for (int i = 1; i <= len; i++) {
+        //if (k == head->data.len_of_line) {
+        if (k == 3) {
             std::cout << "\n*";
             k = 0;
         }
@@ -187,8 +173,8 @@ int DynList<Data_T>::last_match(Data_T data) {
 }
 
 
-/*template<class Data_T>
-std::ostream &operator<<(std::ostream &out_stream, const DynList<Data_T> &list) {
+/*template<class Value_T>
+std::ostream &operator<<(std::ostream &out_stream, const DynList<Value_T> &list) {
     // if (list == nullptr or len == 0) {
     //    throw "\nList is not created! Select option.\n";
     //}
