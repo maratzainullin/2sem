@@ -102,7 +102,7 @@ int main() {
     std::cout << "*******Create a random 3D list.*******\n";
     Mylist_3D.init_rand_list();*/
     std::cout << "*******Create a random Number Book.*******\n";
-    for(int i; i<100; i++){
+    for(int i = 0; i<100; i++){
         Number_Book.push_back(Person::frand(100));
         MyList_2D.push_back(Point_2D::frand(100));
         I.push_back(rand()%100);
@@ -123,6 +123,10 @@ int main() {
     I.insert(99999, 5);
     I.print();
     I.pop(5);
+    Person p;
+    p.name = "dfs";
+    p.telephone_number = 5;
+    Number_Book.remove(p);
     std::cout << I.first_match(99999) << std::endl;
     std::cout << I.last_match(99999) << std::endl;
     I.print();
@@ -233,7 +237,7 @@ int main() {
                 case 7: {
                     for (int k = 0; k < 10; k++) {
                         if (A[k]) {
-                            delete_list(A[k]);
+                            emptyed_list(A[k]);
                         }
                     }
                     break;

@@ -11,8 +11,8 @@ add_executable(task1 sem3_ex1.cpp)
 add_executable(task2 sem3_ex2.cpp)
 add_executable(task3 sem3_ex3.cpp)
 add_executable(task4 sem3_ex4.cpp)
-add_executable(task5 dynlist_main.cpp dynlist.cpp data.cpp data.h)
-add_executable(task6 hash_table.cpp  dynlist.cpp data.cpp data.h)
+add_executable(task5  dynlist.cpp data.cpp data.h dynlist_test.cpp)
+add_executable(task6 hash_table.cpp  dynlist.cpp data.cpp data.h hash.h)
 
 
 

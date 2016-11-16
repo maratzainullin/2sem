@@ -14,18 +14,18 @@ Point_2D Point_2D::frand(int multiplier) {
 }
 
 bool Point_2D::operator!=(Point_2D p) {
-    //return (x = p.x) and (y = p.y) ? false : true;
-    if ((x == p.x) and (y == p.y))
-        return false;
-    else
-        return true;
+    return !((x == p.x) and (y == p.y));
+}
+
+bool Point_2D::operator==(Point_2D p) {
+    return ((x == p.x) and (y == p.y));
 }
 
 std::ostream &operator<<(std::ostream &out_stream, const Point_2D &data) {
     out_stream << std::fixed << std::setprecision(1) << "("
                << std::setw(4) << data.x << "; "
                << std::setw(4) << data.y << ")"
-               << std::setw(4) << std::fixed << std::setprecision(1) << data.r;
+               << std::setw(4) << std::fixed << std::setprecision(1);
     return out_stream;
 }
 
@@ -43,15 +43,15 @@ Point_3D Point_3D::frand(int multiplier) {
     temp.x = std::rand() % multiplier;
     temp.y = std::rand() % multiplier;
     temp.z = std::rand() % multiplier;
-    return  temp;
+    return temp;
 }
 
 bool Point_3D::operator!=(Point_3D p) {
-    //return (x = p.x) and (y = p.y) ? false : true;
-    if ((x == p.x) and (y == p.y) and (z == p.z))
-        return false;
-    else
-        return true;
+    return (x != p.x) and (y != p.y) and (z != p.z);
+}
+
+bool Point_3D::operator==(Point_3D p) {
+    return (x == p.x) and (y == p.y) and (z == p.z);
 }
 
 std::ostream &operator<<(std::ostream &out_stream, const Point_3D &data) {
@@ -81,11 +81,11 @@ Person Person::frand(int multiplier) {
 }
 
 bool Person::operator!=(Person p) {
-    //return (x = p.x) and (y = p.y) ? false : true;
-    if ((telephone_number == p.telephone_number) and (name == p.name))
-        return false;
-    else
-        return true;
+    return (telephone_number != p.telephone_number) and (name != p.name);
+}
+
+bool Person::operator==(Person p) {
+    return (telephone_number == p.telephone_number) and (name == p.name);
 }
 
 std::ostream &operator<<(std::ostream &out_stream, const Person &data) {
