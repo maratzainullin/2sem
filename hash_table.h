@@ -6,9 +6,7 @@
 #include "hash.h"
 #include "dynlist.h"
 
-#define CAPP 1700
-#define LOAD_FACTOR
-#define MAX_HASH 100;
+#define CAPACITY 700
 
 
 template<class Key_T, class Value_T>
@@ -42,7 +40,7 @@ public:
 
 
 private:
-    DynList<Pair> *Table = new DynList<Pair>[CAPP];
+    DynList<Pair> *Table = new DynList<Pair>[CAPACITY];
     int len;
 
 
