@@ -9,6 +9,7 @@
 
 /* Выдает исключения
  * типа string.
+ * Требует перегрузки == и !=.
  */
 
 
@@ -68,7 +69,7 @@ public:
 
     void print(int len_of_string = 5);
 
-    int first_match(Data_T data);   //Требуют перегрузки !=.
+    int first_match(Data_T data);
 
     int last_match(Data_T data);
 
