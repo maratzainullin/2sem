@@ -11,10 +11,6 @@
       <sourceFolder url="file://$MODULE_DIR$/HashTable/hash_table.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HashTable/hash.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DimQ.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Tasks/sem3_ex4.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Tasks/sem3_ex2.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Tasks/sem3_ex3.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Tasks/sem3_ex1.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/draft.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TypeIdFix/type.cpp" isTestSource="false" />

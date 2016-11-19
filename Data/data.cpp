@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iomanip>
-#include <stdlib.h>
 #include "data.h"
 
 
