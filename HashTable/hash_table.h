@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "hash.h"
-#include "dynlist.h"
+#include "../DinList/dynlist.h"
 
 #define CAPACITY 700
 

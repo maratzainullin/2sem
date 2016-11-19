@@ -4,7 +4,7 @@
 #include <ostream>
 #include <iomanip>
 #include <stdlib.h>
-#include "data.h"
+#include "../Data/data.h"
 #include <string>
 
 /* Выдает исключения
