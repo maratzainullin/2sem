@@ -2,6 +2,8 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/TypeIdFix/type.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TypeIdFix/type.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DinList/dynlist.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DinList/dynlist_test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DinList/dynlist.cpp" isTestSource="false" />
@@ -11,10 +13,16 @@
       <sourceFolder url="file://$MODULE_DIR$/HashTable/hash_table.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HashTable/hash.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DimQ.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Threads/Threads.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Threads/Threads.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StatisticsWiki/StatisticsWiki.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StatisticsWiki/wiki_smaller_most_ahahah" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StatisticsWiki/StatisticsWiki.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/StatisticsWiki/wiki_small.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/draft.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TypeIdFix/type.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TypeIdFix/type.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CircularBuffer/CircularBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CircularBuffer/CircularBuffer.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

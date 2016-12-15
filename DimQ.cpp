@@ -127,7 +127,7 @@ int main() {
     Velocity v = l / t;
     Acceleration a = v / t;
 
-    auto smth1 = v * a * a / t;
+    auto smth1 = v + a;
     auto dimensionless = v / v;
 
     cout << v << endl;
